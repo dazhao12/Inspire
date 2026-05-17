@@ -1,0 +1,27 @@
+# Default: ignore everything
+*
+
+# Keep directory traversal so git can discover allowed files below
+!*/
+
+# Keep gitignore itself
+!.gitignore
+
+# Allow common code/script/config file types
+!*.py
+!*.R
+!*.r
+!*.sh
+!*.bash
+!*.zsh
+!*.sql
+!*.ipynb
+!*.yaml
+!*.yml
+!*.json
+!*.toml
+!*.ini
+!*.cfg
+!*.conf
+!Makefile
+!Dockerfile
