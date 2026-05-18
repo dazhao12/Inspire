@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Timestamp: 2026-05-17T17:25:00Z
-Build all-op intraoperative vitals as a complete 5-minute relative-time wide grid.
+Build intraoperative vitals as a complete 5-minute relative-time wide grid.
+Keep only operations with at least one raw vital observation inside the extraction window.
 Reshape/resampling only: no outlier cleaning, calibration, or imputation.
 """
 from pathlib import Path
@@ -104,6 +105,22 @@ WHERE l.chart_time IS NOT NULL
 GROUP BY 1, 2, 3
 """)
 
+print('Filtering grid to operations with at least one raw vital observation ...', flush=True)
+con.execute("""
+CREATE TABLE grid_all_timeline_ops_before_vital_filter AS
+SELECT * FROM grid
+""")
+con.execute("""
+CREATE TABLE vital_ops AS
+SELECT DISTINCT op_id FROM agg
+""")
+con.execute("""
+CREATE OR REPLACE TABLE grid AS
+SELECT g.*
+FROM grid_all_timeline_ops_before_vital_filter g
+JOIN vital_ops v USING (op_id)
+""")
+
 print('Pivoting aggregated bins to wide format ...', flush=True)
 con.execute(f"""
 CREATE TABLE wide_obs AS
@@ -143,6 +160,16 @@ summary_rows = con.execute(f"""
 SELECT 'grid_step_min' AS metric, {GRID_STEP}::DOUBLE AS value
 UNION ALL SELECT 'n_rows', COUNT(*)::DOUBLE FROM wide
 UNION ALL SELECT 'n_ops', COUNT(DISTINCT op_id)::DOUBLE FROM wide
+UNION ALL SELECT 'n_empty_vital_ops_removed',
+  (SELECT COUNT(*)::DOUBLE FROM (
+    SELECT DISTINCT op_id FROM grid_all_timeline_ops_before_vital_filter
+    EXCEPT
+    SELECT op_id FROM vital_ops
+  ))
+UNION ALL SELECT 'n_empty_vital_grid_rows_removed',
+  (SELECT COUNT(*)::DOUBLE
+   FROM grid_all_timeline_ops_before_vital_filter
+   WHERE op_id NOT IN (SELECT op_id FROM vital_ops))
 UNION ALL SELECT 'n_value_columns', {len(ITEMS)}::DOUBLE
 UNION ALL SELECT 'n_rows_with_any_observed_value', SUM(CASE WHEN ({observed_expr}) > 0 THEN 1 ELSE 0 END)::DOUBLE FROM wide
 UNION ALL SELECT 'median_grid_rows_per_op', median(n)::DOUBLE FROM (SELECT op_id, COUNT(*) n FROM wide GROUP BY op_id)
