@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
 })
 
 raw_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/01_raw"
-out_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/version_groups/new_all_ops_20260517"
+out_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed"
 out_defined <- file.path(out_dir, "postop_complications_defined_latest.csv")
 out_summary <- file.path(out_dir, "postop_complications_summary_latest.csv")
 out_dictionary <- file.path(out_dir, "postop_complications_definition_dictionary_20260517.csv")

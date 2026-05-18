@@ -11,7 +11,7 @@ from pathlib import Path
 from datetime import datetime
 import duckdb
 
-BASE = Path('/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/version_groups/new_all_ops_20260517')
+BASE = Path('/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed')
 DB = BASE / 'intraop_vitals_wide_5min_grid_20260517.duckdb'
 OUT = BASE / 'intraop_vitals_wide_5min_grid_before_impute_no_calibration_all_ops.csv'
 SUMMARY = BASE / 'intraop_vitals_wide_5min_grid_summary_20260517.csv'

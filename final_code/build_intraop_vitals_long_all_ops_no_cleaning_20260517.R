@@ -12,7 +12,7 @@ args <- commandArgs(trailingOnly = TRUE)
 dry_run <- "--dry-run" %in% args
 
 raw_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/01_raw"
-out_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/version_groups/new_all_ops_20260517"
+out_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed"
 ops_file <- file.path(raw_dir, "operations.csv")
 vitals_file <- file.path(raw_dir, "vitals.csv")
 

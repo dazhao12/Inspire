@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-base_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/version_groups/new_all_ops_20260517"
+base_dir <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed"
 in_long <- file.path(base_dir, "intraop_vitals_clean_before_impute_no_calibration_all_op_extracted.csv")
 window_qc <- file.path(base_dir, "intraop_vitals_extract_window_qc_20260517.csv")
 out_wide <- file.path(base_dir, "intraop_vitals_wide_5min_grid_before_impute_no_calibration_all_ops.csv")

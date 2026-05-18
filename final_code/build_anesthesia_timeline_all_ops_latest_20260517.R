@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
 })
 
 raw_path <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/01_raw/operations.csv"
-out_path <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/version_groups/new_all_ops_20260517/anesthesia_timeline_all_ops_latest.csv"
+out_path <- "/N/project/analgesia_perioperation/data/INSPIRE_1.3/02_extracted_unprocessed/anesthesia_timeline_all_ops_latest.csv"
 
 dir.create(dirname(out_path), recursive = TRUE, showWarnings = FALSE)
 
